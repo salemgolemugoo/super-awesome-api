@@ -1,0 +1,14 @@
+{
+  "name": "metadata-reader",
+  "version": "1.0.0",
+  "description": "Reads the metadata.yml and exports significant variables as outputs",
+  "main": "index.js",
+  "keywords": [
+    "metadata"
+  ],
+  "author": "Marat Salimzianov <marat.salimzianov@park-now.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.8.0"
+  }
+}
