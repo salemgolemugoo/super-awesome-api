@@ -17,14 +17,9 @@ env:
                                               # containerDefinitions section of your task definition
 
 jobs:
-  metadata:
-    name: Read metadata from file
+  build:
+    name: Build a docker image
     runs-on: ubuntu-latest
-    outputs:
-      platform: ${{ steps.meta.outputs.platform }}
-      system: ${{ steps.meta.outputs.system }}
-      subsystem: ${{ steps.meta.outputs.subsystem }}
-      owner: ${{ steps.meta.outputs.owner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,27 +28,12 @@ jobs:
         id: meta
         uses: ./.github/actions/metadata-reader
 
-  ecr:
-    name: Create an ECR repository
-    needs: metadata
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        run: ls -la && pwd
       - name: Deploy the cloudformation stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: "${{ needs.metadata.outputs.platform }}-${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-stack"
           template: ./.aws/ecr.yml
           parameter-overrides: "Name=${{ needs.metadata.outputs.platform }}/${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-repo"
-
-  build:
-    name: Build a docker image
-    needs: ecr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Docker meta information
         id: meta
