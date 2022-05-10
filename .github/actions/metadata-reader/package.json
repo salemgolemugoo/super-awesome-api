@@ -9,6 +9,7 @@
   "author": "Marat Salimzianov <marat.salimzianov@park-now.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.8.0"
+    "@actions/core": "^1.8.0",
+    "yaml": "^2.0.1"
   }
 }
