@@ -12,11 +12,9 @@ on:
 
 env:
   AWS_REGION: eu-central-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY
   ECS_SERVICE: MY_ECS_SERVICE
   ECS_CLUSTER: MY_ECS_CLUSTER
   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION
-  CONTAINER_NAME: MY_CONTAINER_NAME
 
 jobs:
   build:
@@ -37,7 +35,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Deploy the cloudformation stack
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1.3.3
+
+      - name: Deploy the cloudformation ECR stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: "${{ steps.metadata.outputs.platform }}-${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-stack"
@@ -47,15 +49,20 @@ jobs:
           parameter-overrides: "Name=${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
           tags: |
             [
+              { "Key": "Environment", "Value": "prod" },
               { "Key": "Platform", "Value": "${{ steps.metadata.outputs.platform }}" },
               { "Key": "System", "Value": "${{ steps.metadata.outputs.system }}" },
               { "Key": "Subsystem", "Value": "${{ steps.metadata.outputs.subsystem }}" },
-              { "Key": "Owner", "Value": "${{ steps.metadata.outputs.owner }}" }
+              { "Key": "Owner", "Value": "${{ steps.metadata.outputs.owner }}" },
+              { "Key": "Provisioner", "Value": "Cloudformation" }
             ]
 
       - name: Docker meta information
         id: docker-meta
         uses: docker/metadata-action@v3
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: "${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
         with:
           # list of Docker images to use as base name for tags
           images: |
@@ -66,10 +73,6 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1.3.3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
