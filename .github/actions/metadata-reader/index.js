@@ -7,12 +7,11 @@ try {
   const file = fs.readFileSync(filename, 'utf8');
   const metadata = yaml.parse(file);
 
-  console.log("Printing meta");
-  console.log(metadata);
-  core.setOutput('platform', metadata.platform);
-  core.setOutput('system', metadata.system);
-  core.setOutput('subsystem', metadata.subsystem);
-  core.setOutput('owner', metadata.owner);
+  console.log("Metadata: " + metadata);
+  core.setOutput('platform', metadata.Platform);
+  core.setOutput('system', metadata.System);
+  core.setOutput('subsystem', metadata.Subsystem);
+  core.setOutput('owner', metadata.Owner);
 
 } catch (error) {
   core.setFailed(error.message);
