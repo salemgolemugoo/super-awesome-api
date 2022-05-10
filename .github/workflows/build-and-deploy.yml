@@ -38,6 +38,8 @@ jobs:
     needs: metadata
     runs-on: ubuntu-latest
     steps:
+      - name: Test
+        run: echo ${{ needs.metadata.outputs.platform }} ${{ needs.metadata.outputs.system }} ${{ needs.metadata.outputs.subsystem }}
       - name: Deploy the cloudformation stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
