@@ -54,7 +54,7 @@ jobs:
               { "Key": "System", "Value": "${{ steps.metadata.outputs.system }}" },
               { "Key": "Subsystem", "Value": "${{ steps.metadata.outputs.subsystem }}" },
               { "Key": "Owner", "Value": "${{ steps.metadata.outputs.owner }}" },
-              { "Key": "Provisioner", "Value": "Cloudformation" }
+              { "Key": "Provisioner", "Value": "cloudformation" }
             ]
 
       - name: Docker meta information
