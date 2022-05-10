@@ -25,17 +25,18 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Read metadata
+        id: metadata
         uses: ./.github/actions/metadata-reader
 
       - name: Deploy the cloudformation stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: "${{ needs.metadata.outputs.platform }}-${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-stack"
+          name: "${{ steps.metadata.outputs.platform }}-${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-stack"
           template: ./.aws/ecr.yml
-          parameter-overrides: "Name=${{ needs.metadata.outputs.platform }}/${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-repo"
+          parameter-overrides: "Name=${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
 
       - name: Docker meta information
-        id: meta
+        id: docker-meta
         uses: docker/metadata-action@v3
         with:
           # list of Docker images to use as base name for tags
