@@ -36,7 +36,7 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: "${{ needs.metadata.outputs.platform }}-${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-stack"
-          template: ./.aws/ecr.yaml
+          template: ./.aws/ecr.yml
           parameter-overrides: "Name=${{ needs.metadata.outputs.platform }}/${{ needs.metadata.outputs.system }}-${{ needs.metadata.outputs.subsystem }}-repo"
 
   build:
