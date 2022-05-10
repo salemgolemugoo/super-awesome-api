@@ -39,7 +39,15 @@ jobs:
           name: "${{ steps.metadata.outputs.platform }}-${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-stack"
           template: ./.aws/ecr.yml
           capabilities: "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"
+          no-fail-on-empty-changeset: "1"
           parameter-overrides: "Name=${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
+          tags: |
+            [
+              { "Key": "Platform", "Value": "${{ steps.metadata.outputs.platform }}" },
+              { "Key": "System", "Value": "${{ steps.metadata.outputs.system }}" },
+              { "Key": "Subsystem", "Value": "${{ steps.metadata.outputs.subsystem }}" },
+              { "Key": "Owner", "Value": "${{ steps.metadata.outputs.owner }}" }
+            ]
 
       - name: Docker meta information
         id: docker-meta
