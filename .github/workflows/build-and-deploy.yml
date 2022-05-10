@@ -38,6 +38,7 @@ jobs:
         with:
           name: "${{ steps.metadata.outputs.platform }}-${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-stack"
           template: ./.aws/ecr.yml
+          capabilities: "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"
           parameter-overrides: "Name=${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
 
       - name: Docker meta information
