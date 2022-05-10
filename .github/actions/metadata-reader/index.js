@@ -7,7 +7,8 @@ try {
   const file = fs.readFileSync(filename, 'utf8');
   const metadata = yaml.parse(file);
 
-  console.log("Metadata: " + metadata);
+  console.log("Metadata: ");
+  console.log(metadata);
   core.setOutput('platform', metadata.Platform);
   core.setOutput('system', metadata.System);
   core.setOutput('subsystem', metadata.Subsystem);

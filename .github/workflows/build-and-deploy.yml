@@ -33,16 +33,13 @@ jobs:
         id: meta
         uses: ./.github/actions/metadata-reader
 
-      - name: test
-        run: echo "bla bla ${{ steps.meta.outputs.platform }}"
-
   ecr:
     name: Create an ECR repository
     needs: metadata
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: echo ${{ needs.metadata.outputs.platform }} ${{ needs.metadata.outputs.system }} ${{ needs.metadata.outputs.subsystem }}
+        run: ls -la && pwd
       - name: Deploy the cloudformation stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
