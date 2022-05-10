@@ -20,11 +20,17 @@ jobs:
   metadata:
     name: Read metadata from file
     runs-on: ubuntu-latest
+    outputs:
+      platform: ${{ steps.meta.outputs.platform }}
+      system: ${{ steps.meta.outputs.system }}
+      subsystem: ${{ steps.meta.outputs.subsystem }}
+      owner: ${{ steps.meta.outputs.owner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Read metadata
+        id: meta
         uses: ./.github/actions/metadata-reader
 
   ecr:
