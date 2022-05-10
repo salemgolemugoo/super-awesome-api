@@ -6,6 +6,7 @@ Platform: bloxx
 System: supercool
 Subsystem: webapi
 Owner: bloxx squad
+Target: SuperCool.WebApi
 Runtimes:
   - dotnetocre3.1
 JiraReference:

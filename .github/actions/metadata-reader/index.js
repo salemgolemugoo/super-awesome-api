@@ -13,6 +13,7 @@ try {
   core.setOutput('system', metadata.System);
   core.setOutput('subsystem', metadata.Subsystem);
   core.setOutput('owner', metadata.Owner);
+  core.setOutput('target', metadata.Target);
 
 } catch (error) {
   core.setFailed(error.message);

@@ -3,14 +3,15 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim as publish
+ARG APP_NAME
 WORKDIR /src
 COPY ["src", "src/"]
-RUN dotnet restore "src/SuperCool.WebApi/SuperCool.WebApi.csproj"
+RUN dotnet restore "src/${APP_NAME}/${APP_NAME}.csproj"
 
-WORKDIR "/src/SuperCool.WebApi"
+WORKDIR "/src/${APP_NAME}"
 COPY /src .
-RUN dotnet build "SuperCool.WebApi/SuperCool.WebApi.csproj" --configuration Release --output /app/build
-RUN dotnet publish "SuperCool.WebApi/SuperCool.WebApi.csproj" \
+RUN dotnet build "${APP_NAME}/${APP_NAME}.csproj" --configuration Release --output /app/build
+RUN dotnet publish "${APP_NAME}/${APP_NAME}.csproj" \
   --configuration Release \
   --output /app/publish
 
@@ -33,6 +34,6 @@ ENV CORECLR_ENABLE_PROFILING=1 \
   CORECLR_NEWRELIC_HOME=/usr/local/newrelic-netcore20-agent \
   CORECLR_PROFILER_PATH=/usr/local/newrelic-netcore20-agent/libNewRelicProfiler.so
 
-RUN ln -s ./${APP_NAME} main.dll
+RUN ln -s ./${APP_NAME}.dll main.dll
 
-ENTRYPOINT ["dotnet", "SuperCool.WebApi.dll"]
+ENTRYPOINT ["dotnet", "main.dll"]
