@@ -1,15 +1,15 @@
-name: Metadata Reader
-description: Reads the metadata.yml and exports significant variables as outputs
+name: "Metadata Reader"
+description: "Reads the metadata.yml and exports significant variables as outputs"
 inputs: {}
 outputs:
   platform:
-    description: Platform name
+    description: "Platform name"
   system:
-    description: System name
+    description: "System name"
   subsystem:
-    description: Subsystem name
+    description: "Subsystem name"
   owner:
-    description: The service owner name
+    description: "The service owner name"
 runs:
-  using: node16
-  main: index.js
+  using: "node16"
+  main: "index.js"
