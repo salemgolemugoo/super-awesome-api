@@ -1,6 +1,10 @@
 name: "Metadata Reader"
 description: "Reads the metadata.yml and exports significant variables as outputs"
-inputs: {}
+inputs:
+  filename:
+    default: "metadata.yml"
+    description: "Metadata filename"
+    required: false
 outputs:
   platform:
     description: "Platform name"

@@ -33,6 +33,9 @@ jobs:
         id: meta
         uses: ./.github/actions/metadata-reader
 
+      - name: test
+        run: echo ${{ steps.meta.outputs.platform }}
+
   ecr:
     name: Create an ECR repository
     needs: metadata

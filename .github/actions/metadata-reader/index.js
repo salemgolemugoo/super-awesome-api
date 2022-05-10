@@ -3,7 +3,8 @@ const fs = require('fs');
 const yaml = require('yaml');
 
 try {
-  const file = fs.readFileSync('metadata.yml', 'utf8');
+  const filename = core.getInput('filename', { required: false });
+  const file = fs.readFileSync(filename, 'utf8');
   const metadata = yaml.parse(file);
 
   core.setOutput('platform', metadata.platform);
