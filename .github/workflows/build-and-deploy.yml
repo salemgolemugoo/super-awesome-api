@@ -62,7 +62,7 @@ jobs:
         uses: docker/metadata-action@v3
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: "${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo"
+          ECR_REPOSITORY: "${{ steps.metadata.outputs.platform }}/${{ steps.metadata.outputs.system }}-${{ steps.metadata.outputs.subsystem }}-repo2"
         with:
           # list of Docker images to use as base name for tags
           images: |
